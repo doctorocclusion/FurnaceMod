@@ -1,0 +1,16 @@
+[
+{
+  "modid": "furnacemod",
+  "name": "Furnace",
+  "description": "Script your gameplay!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["doctorocclusion"],
+  "credits": "Sam Sartor",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
