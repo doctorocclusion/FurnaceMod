@@ -15,7 +15,7 @@ public abstract class FurnaceComp {
 
 	public FurnaceComp(FurnaceContext fc) {
 		this.fc = fc;
-		f = fc.furnace;
+		f = fc.f;
 		v8 = f.runtime;
 		UNDEFINED = v8.getUndefined();
 	}

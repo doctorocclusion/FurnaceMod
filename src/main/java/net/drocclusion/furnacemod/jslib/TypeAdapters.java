@@ -12,8 +12,8 @@ import java.util.UUID;
 /**
  * Created by Sam Sartor on 8/8/2016.
  */
-public class FurnMCUtils extends FurnaceComp {
-	public FurnMCUtils(FurnaceContext fc) {
+public class TypeAdapters extends FurnaceComp {
+	public TypeAdapters(FurnaceContext fc) {
 		super(fc);
 	}
 
@@ -30,10 +30,10 @@ public class FurnMCUtils extends FurnaceComp {
 		// TODO uuid utility funcs, like for "f81d4fae-7dec-11d0-a765-00a0c91e6bf6" sorts of things
 		if (!(value instanceof V8Array)) throw new Error("UUID object is not a js array");
 		V8Array arr = (V8Array) value;
-		long least = arr.getInteger(0);
-		least |= (long) arr.getInteger(0) << 32;
-		long most = arr.getInteger(0);
-		most |= (long) arr.getInteger(0) << 32;
+		long least = arr.getInteger(0) & 0xFFFFFFFFL;
+		least |= ((long) arr.getInteger(1)) << 32;
+		long most = arr.getInteger(2) & 0xFFFFFFFFL;
+		most |= ((long) arr.getInteger(3)) << 32;
 		return new UUID(most, least);
 	}
 
@@ -49,13 +49,16 @@ public class FurnMCUtils extends FurnaceComp {
 		double x = 0;
 		double y = 0;
 		double z = 0;
-		if (value instanceof V8Object) {
+		if (value instanceof V8Array) {
+			V8Array arr = (V8Array) value;
+			x = arr.getDouble(0);
+			y = arr.getDouble(1);
+			z = arr.getDouble(2);
+		} else if (value instanceof V8Object) {
 			V8Object obj = (V8Object) value;
 			x = obj.getDouble("x");
 			y = obj.getDouble("y");
 			z = obj.getDouble("z");
-		} else if (value instanceof V8Array) {
-
 		} else {
 			throw new Error("Pos object is not a js array or js object");
 		}

@@ -24,6 +24,9 @@ version = "0.0-SNAPSHOT"
 group= "net.drocclusion.furnacemod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "furnacemod"
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 minecraft {
     version = "1.10.2-12.18.1.2046"
     runDir = "run"
@@ -38,7 +41,8 @@ minecraft {
 }
 
 dependencies {
-    compile 'com.eclipsesource.j2v8:j2v8_win32_x86_64:4.5.0'
+	compile 'com.eclipsesource.j2v8:j2v8_win32_x86_64:4.5.0'
+
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
