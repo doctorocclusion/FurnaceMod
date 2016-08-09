@@ -24,6 +24,9 @@ public class FurnaceUtils {
 			props = createObject();
 		}
 
+		/**
+		 * End the current descriptor.
+		 */
 		private void endCurrent() {
 			if (current != null) {
 				props.add(currentName, current);
@@ -40,6 +43,9 @@ public class FurnaceUtils {
 			return this;
 		}
 
+		/**
+		 * Start a new <a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty>descriptor</a>.
+		 */
 		public PropBuilder newMember(String name) {
 			endCurrent();
 			current = new V8Object(runtime);
@@ -68,6 +74,17 @@ public class FurnaceUtils {
 		 */
 		public PropBuilder enumerable(boolean value) {
 			current.add("enumerable", value);
+			return this;
+		}
+
+		/**
+		 * Sets configurable, enumerable, and writable to true. Same as if the member was added by assignment.
+		 * @return
+		 */
+		public PropBuilder standard() {
+			configurable(true);
+			enumerable(true);
+			writable(true);
 			return this;
 		}
 
@@ -181,10 +198,10 @@ public class FurnaceUtils {
 		public V8Object build() {
 			endCurrent();
 			if (obj != null) {
-				defineProperties(obj, props);
+				defineProperties(obj, props); // <--
 				if (setProto) obj.setPrototype(proto);
 			} else {
-				obj = createObject(setProto ? proto : null, props);
+				obj = createObject(setProto ? proto : null, props); // <--
 			}
 			props.release();
 			props = null;
@@ -216,7 +233,7 @@ public class FurnaceUtils {
 	 */
 	public void defineProperties(V8Object obj, V8Object props) {
 		V8Array args = new V8Array(runtime).push(obj).push(props);
-		_defineProperties.call(_objectObject, args);
+		_defineProperties.call(_objectObject, args); // <--
 		args.release();
 	}
 
@@ -225,7 +242,7 @@ public class FurnaceUtils {
 	 */
 	public void defineProperty(V8Object obj, String name, V8Object descriptor) {
 		V8Array args = new V8Array(runtime).push(obj).push(name).push(descriptor);
-		_defineProperties.call(_objectObject, args);
+		_defineProperties.call(_objectObject, args); // <--
 		args.release();
 	}
 
@@ -234,7 +251,7 @@ public class FurnaceUtils {
 	 */
 	public V8Object createObject(V8Object proto, V8Object props) {
 		V8Array args = new V8Array(runtime).push(proto).push(props);
-		return (V8Object) releaseThenReturn(_createObject.call(_objectObject, args), args);
+		return (V8Object) releaseThenReturn(_createObject.call(_objectObject, args), args); // <--
 	}
 
 	/**

@@ -1,9 +1,6 @@
 package net.drocclusion.furnacemod;
 
-import com.eclipsesource.v8.JavaCallback;
-import com.eclipsesource.v8.V8;
-import com.eclipsesource.v8.V8Array;
-import com.eclipsesource.v8.V8Object;
+import com.eclipsesource.v8.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -74,14 +71,20 @@ public class Furnace {
 		ob.newMember("itzover").value((receiver, parameters) -> (parameters.length() + " < 9,000!"));
 		ob.newMember("foo"). getter((receiver, parameters) -> "bar");
 		ob.newMember("zeb").value("ra");
+		ob.newMember("err").value((JavaVoidCallback) (receiver, parameters) -> { throw new Error("test"); });
 		V8Object obj = ob.build();
 
 		f.runtime.add("test", obj);
-		obj.release();
 		System.out.println(f.execute("test.itzover(1, 2, 3)"));
 		System.out.println(f.execute("test.foo"));
 		System.out.println(f.execute("test.zeb"));
+		f.execute("test.int = 1");
+		f.execute("test.doub = 1.5");
 
+		obj.getDouble("int");
+		obj.getInteger("doub");
+
+		obj.release();
 		t -= System.nanoTime();
 
 		System.out.printf("Time: %.2fms%n", -t * 1e-6);
