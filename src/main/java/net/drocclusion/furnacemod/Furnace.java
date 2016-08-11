@@ -1,61 +1,27 @@
 package net.drocclusion.furnacemod;
 
 import com.eclipsesource.v8.*;
-import net.drocclusion.furnacemod.jslib.FurnaceContext;
-import net.minecraft.server.MinecraftServer;
-
-import java.util.concurrent.TimeUnit;
+import net.drocclusion.furnacemod.components.Component;
+import net.drocclusion.furnacemod.utils.FurnaceUtils;
 
 /**
  * Created by Sam Sartor on 8/6/2016.
  */
 public class Furnace {
-	public static Furnace inst;
-
-	public V8 runtime;
+	public V8 v8;
 	public FurnaceUtils utils;
-	public FurnaceContext context;
-	public MinecraftServer ms;
+	public Component lib;
 
-	public Furnace(MinecraftServer ms) {
-		this.ms = ms;
-		runtime = V8.createV8Runtime();
-		utils = new FurnaceUtils(runtime);
-		context = new FurnaceContext(this);
-		/* // Needs to be more defensive
-		Runtime.getRuntime().addShutdownHook(new Thread()
-		{
-			@Override
-			public void run()
-			{
-				safeRelease();
-			}
-		});
-		*/
-	}
-
-	public Object execute(String script, boolean ignoreOutput) {
-		if (runtime == null) return null;
-		Object out = runtime.executeScript(script);
-		if (ignoreOutput) {
-			FurnaceUtils.safeRelease(out);
-			return null;
-		}
-		return out;
-	}
-
-	public Object execute(String script) {
-		return execute(script, false);
+	public Furnace() {
+		v8 = V8.createV8Runtime();
+		utils = new FurnaceUtils(this);
+		lib = new Component(this);
 	}
 
 	public void release() {
-		if (runtime != null) {
-			utils.release();
-			context.release();
-			runtime.release();
-		}
-		context = null;
-		runtime = null;
-		utils = null;
+		utils.release();
+		lib.releaseDown();
+		v8.release();
 	}
 }
+

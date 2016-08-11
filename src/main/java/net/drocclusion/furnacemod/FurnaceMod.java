@@ -1,6 +1,5 @@
 package net.drocclusion.furnacemod;
 
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -29,7 +28,7 @@ public class FurnaceMod
     @EventHandler
     public void onServerPreStart(FMLServerAboutToStartEvent event)
     {
-        if (furnace != null && !furnace.runtime.isReleased()) furnace.release();
+        if (furnace != null && !furnace.v8.isReleased()) furnace.release();
         furnace = new Furnace(event.getServer());
     }
 
