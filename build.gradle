@@ -41,7 +41,8 @@ minecraft {
 }
 
 dependencies {
-	compile 'com.eclipsesource.j2v8:j2v8_win32_x86_64:4.5.0'
+	compile 'com.eclipsesource.j2v8:j2v8_linux_x86_64:4.5.0'
+	//compile 'com.eclipsesource.j2v8:j2v8_win32_x86_64:4.5.0'
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..

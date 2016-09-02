@@ -6,7 +6,7 @@ import net.drocclusion.furnacemod.Furnace;
 import java.util.HashMap;
 
 // TODO javadocs
-public class Component implements IPlainReleasable {
+public class Component {
 	protected HashMap<String,Component> children = new HashMap<>();
 	public V8Object object;
 
@@ -41,10 +41,5 @@ public class Component implements IPlainReleasable {
 			object.release();
 			children.values().forEach(Component::releaseDown);
 		}
-	}
-
-	@Override
-	public void release() {
-		releaseDown();
 	}
 }

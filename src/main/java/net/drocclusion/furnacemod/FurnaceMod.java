@@ -1,16 +1,11 @@
 package net.drocclusion.furnacemod;
 
-import net.drocclusion.furnacemod.adapters.AdapterManager;
-import net.drocclusion.furnacemod.adapters.converters.Converter;
-import net.drocclusion.furnacemod.api.EntityConnector;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
-
-import java.util.UUID;
 
 @Mod(modid = FurnaceMod.MODID, version = FurnaceMod.VERSION)
 public class FurnaceMod
@@ -33,14 +28,14 @@ public class FurnaceMod
     @EventHandler
     public void onServerPreStart(FMLServerAboutToStartEvent event)
     {
-        if (furnace != null && !furnace.v8.isReleased()) furnace.release();
-        furnace = new Furnace(event.getServer());
+        //if (furnace != null && !furnace.v8.isReleased()) furnace.release();
+        //furnace = new Furnace(event.getServer());
     }
 
     @EventHandler
     public void onServerStart(FMLServerStartingEvent event)
     {
-       // event.registerServerCommand(commandSmelt = new CommandSmelt(furnace));
+        //event.registerServerCommand(commandSmelt = new CommandSmelt(furnace));
     }
 
     @EventHandler
